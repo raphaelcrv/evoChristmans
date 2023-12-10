@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   var userMessage = ""
-  res.render('index',userMessage);
+  res.render('index', userMessage);
 });
 
 app.post('/generateMessage', (req, res) => {
@@ -21,7 +21,7 @@ app.post('/generateMessage', (req, res) => {
     url: 'https://api.openai.com/v1/chat/completions',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer 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'
+      'Authorization': 'Bearer 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'
     },
     body: JSON.stringify({
       "model": "gpt-4",
@@ -37,10 +37,16 @@ app.post('/generateMessage', (req, res) => {
   request(gptOptions, function (error, response, body) {
     if (error) throw new Error(error);
 
-    const responseBody = JSON.parse(body);
-    const gptResponse = responseBody.choices[0].message.content;
+    try {
 
-    res.render('index', { userMessage, gptResponse });
+      const responseBody = JSON.parse(body);
+      console.log(responseBody)
+      const gptResponse = responseBody.choices[0].message.content;
+      res.render('index', { userMessage, gptResponse });
+
+    } catch (e) {
+      console.log(e)
+    }
   });
 });
 
