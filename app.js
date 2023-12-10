@@ -21,7 +21,7 @@ app.post('/generateMessage', (req, res) => {
     url: 'https://api.openai.com/v1/chat/completions',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer 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'
+      'Authorization': 'Bearer sk-gZU0f9wHxcnzQhhehHQGT3BlbkFJ4w2bD3euuJybd3gyT5fjx'
     },
     body: JSON.stringify({
       "model": "gpt-4",
@@ -44,8 +44,9 @@ app.post('/generateMessage', (req, res) => {
       const gptResponse = responseBody.choices[0].message.content;
       res.render('index', { userMessage, gptResponse });
 
-    } catch (e) {
-      console.log(e)
+    }
+     catch (errorMessage) {
+      res.render('error', { errorMessage });
     }
   });
 });
