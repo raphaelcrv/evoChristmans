@@ -11,9 +11,11 @@ export default defineNuxtConfig({
     '@formkit/auto-animate/nuxt',
     '@nuxtjs/i18n',
     '@nuxtjs/google-fonts',
+    'nuxt-icon'
   ],
   css: [
     'primeflex/primeflex.css',
+    'primeflex/themes/primeone-light.css',
     '@/assets/fonts/ChristmasWish/stylesheet.css'
   ],
   i18n: {

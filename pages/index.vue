@@ -1,20 +1,33 @@
 <template>
-  <div v-auto-animate>
+  <div>
 
-    <div class="fixed hidePrint" style="right:1rem;top:1rem">
+    <div class="fixed hidePrint" v-auto-animate style="right:1rem;top:1rem;z-index: 99;">
       <select v-model="language" class="p-1">
-        <option v-for="language in languages" :value="language">{{ language }}</option>
+        <option v-for="(language, i) in languages" :value="language">{{ languages_icons[i] }} {{ language }}</option>
       </select>
     </div>
-    <div class="flex align-items-center justify-content-around flex-column " style="height: 100dvh;font-family: var(--font);">
-      <div></div>
-      <img src="/imgs/logo.png">
-      <div class="text-4xl px-8 text-justify" id="type">
+    <div class="grid grid-nogutter" style="height: 100dvh;font-family: var(--font);" >
+      <div class="col-6 bg-center bg-no-repeat bg-black "
+        style="background-image: url('/imgs/santa.jpeg');background-color: black;background-size: 100% auto;"></div>
+      <div class="col flex align-items-center justify-content-around flex-column ">
+        <div></div>
+        <img src="/imgs/logo.png">
 
+        <div class="px-4">
+          <div class="text-4xl text-red-500 text-justify" id="type"></div>
+        </div>
+        <button class="button border-round-3xl hidePrint" type="button" @click="generate()" v-if="!is_generated">{{
+          $t('generate_evowish')
+        }}</button>
+        <button class="button border-round-3xl hidePrint" type="button" @click="share()" v-if="is_generated && is_done">{{
+          $t('share')
+        }}</button>
+        <div class="px-6 text-xs hidePrint" style="font-family: Arial, Helvetica, sans-serif;" >
+          <div v-if="is_generated">
+            {{ $t('footer') }}
+          </div>
+        </div>
       </div>
-      <button class="button hidePrint" type="button" @click="generate()" v-if="!is_generated">{{ $t('generate_evowish') }}</button>
-      <button class="button hidePrint" type="button" @click="share()" v-if="is_generated && is_done">{{ $t('share') }}</button>
-      <div></div>
     </div>
 
   </div>
@@ -28,7 +41,8 @@ import 'share-api-polyfill'
 export default {
   data() {
     return {
-      languages: ['en', 'es', 'pt'],
+      languages_icons: ['🇺🇸', '🇩🇪', '🇧🇷'],
+      languages: ['en', 'de', 'pt'],
       language: 'en',
       theaterjs: null,
       message: '',
@@ -57,7 +71,7 @@ export default {
         this.uid = id
         this.is_done = true
       } catch (error) {
-        this.is_generated = false
+        this.is_done = false
         if (error instanceof FetchError)
           console.error(error.data.error)
         this.message = 'error'
@@ -75,7 +89,7 @@ export default {
     this.type = theaterJS({
       minSpeed: {
         erase: 10,
-        type:30
+        type: 30
       }
     })
     this.type.addActor('type', {
@@ -123,10 +137,17 @@ html {
   margin: 0;
   height: 100%;
 }
+
 @media print {
-  @page { margin: 0; }
-  body { margin: 1.6cm; }
-  .hidePrint{
+  @page {
+    margin: 0;
+  }
+
+  body {
+    margin: 1.6cm;
+  }
+
+  .hidePrint {
     display: none;
     opacity: 0;
   }
