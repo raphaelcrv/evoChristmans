@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="fixed hidePrint" v-auto-animate style="right:1rem;top:1rem;z-index: 99;">
       <select v-model="language" class="p-1">
         <option v-for="(language, i) in languages" :value="language">{{ languages_icons[i] }} {{ language }}</option>

@@ -1,14 +1,23 @@
 <template>
   <div v-auto-animate>    
-    <div class="flex align-items-center justify-content-around flex-column " style="height: 100dvh;font-family: var(--font);">
-      <div></div>
-      <img src="/imgs/logo.png">
-      <div class="text-4xl px-8 text-justify" id="type">
-        {{ text }}
+  <div class="grid grid-nogutter" style="height: 100dvh;font-family: var(--font);" >
+        <div class="col-6 bg-center bg-no-repeat bg-black "
+          style="background-image: url('/imgs/santa.jpeg');background-color: black;background-size: 100% auto;"></div>
+        <div class="col flex align-items-center justify-content-around flex-column ">
+          <div></div>
+          <img src="/imgs/logo.png">
+
+          <div class="px-4">
+            <div class="text-4xl text-red-500 text-justify" >{{ text }}</div>
+          </div>
+     
+          <div class="px-6 text-xs hidePrint" style="font-family: Arial, Helvetica, sans-serif;" >
+            <div >
+              {{ $t('footer') }}
+            </div>
+          </div>
+        </div>
       </div>
-      <div></div>
-      <div>${{ $t('footer') }}</div>
-    </div>
 
   </div>
 </template>
